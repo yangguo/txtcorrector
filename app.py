@@ -55,21 +55,23 @@ def main():
 
     st.subheader("Chinese Spelling Correction")
 
-    search_text = st.sidebar.text_area('Input Text')
-    if search_text != '':
-        search_list = search_text.split()
-        search_list = list(filter(None, search_list))
+    search_text = st.text_area('Input Text')
 
-        result_list = corrector(search_list)
+    if st.button('Correct'):
+        if search_text != '':
+            search_list = search_text.split()
+            search_list = list(filter(None, search_list))
 
-        # list of search list and result list
-        for search_word, result in zip(search_list, result_list):
-            st.write('Input text:' + search_word)
-            corrected_text, details = result
-            st.write('Corrected text:' + corrected_text)
-            st.write('Details:')
-            for detail in details:
-                st.write(detail)
+            result_list = corrector(search_list)
+
+            # list of search list and result list
+            for search_word, result in zip(search_list, result_list):
+                st.write('Input text:' + search_word)
+                corrected_text, details = result
+                st.write('Corrected text:' + corrected_text)
+                st.write('Details:')
+                for detail in details:
+                    st.write(detail)
 
 
 if __name__ == '__main__':
