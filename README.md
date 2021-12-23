@@ -1,5 +1,5 @@
 ---
-title: Txtcorrector
+title: txt corrector
 emoji: 🏢
 colorFrom: blue
 colorTo: gray
