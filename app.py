@@ -67,33 +67,36 @@ def main():
     search_text = st.text_area('Input Text')
 
     if st.button('Correct'):
-        if search_text != '':
-            search_list = search_text.split()
-            search_list = list(filter(None, search_list))
+        with st.spinner('Processing...'):
+            if search_text != '':
+                search_list = search_text.split()
+                search_list = list(filter(None, search_list))
 
-            result_list = corrector(search_list)
+                result_list = corrector(search_list)
 
-            # list of search list and result list
-            for search_word, result in zip(search_list, result_list):
+                # list of search list and result list
+                for search_word, result in zip(search_list, result_list):
 
-                corrected_text, details = result
-                # if details is not empty, show details
-                if details:
-                    txt_hl = list(search_word)
-                    corrected_hl = list(corrected_text)
-                    for detail in details:
-                        # highlight word in text
-                        txt_hl = highlight_word(txt_hl, detail[2], detail[3])
-                        corrected_hl = highlight_word(corrected_hl, detail[2],
-                                                      detail[3])
+                    corrected_text, details = result
+                    # if details is not empty, show details
+                    if details:
+                        txt_hl = list(search_word)
+                        corrected_hl = list(corrected_text)
+                        for detail in details:
+                            # highlight word in text
+                            txt_hl = highlight_word(txt_hl, detail[2], detail[3])
+                            corrected_hl = highlight_word(corrected_hl, detail[2],
+                                                        detail[3])
 
-                    txt_hlstr = ''.join(txt_hl)
-                    corrected_hlstr = ''.join(corrected_hl)
-                    st.markdown('Input text: ' + txt_hlstr,
-                                unsafe_allow_html=True)
-                    st.markdown('Corrected text: ' + corrected_hlstr,
-                                unsafe_allow_html=True)
-
+                        txt_hlstr = ''.join(txt_hl)
+                        corrected_hlstr = ''.join(corrected_hl)
+                        st.markdown('Input text: ' + txt_hlstr,
+                                    unsafe_allow_html=True)
+                        st.markdown('Corrected text: ' + corrected_hlstr,
+                                    unsafe_allow_html=True)
+                    else:
+                        # if details is empty, no error found
+                        st.markdown('NO ERRORS FOUND')
 
 if __name__ == '__main__':
     main()
