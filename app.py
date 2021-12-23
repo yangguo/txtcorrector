@@ -51,6 +51,15 @@ def corrector(texts):
     return result
 
 
+# replace each word in list based on start and end index
+def highlight_word(text_list, start, end):
+    new_text_list = text_list[start:end]
+    upttxt = []
+    for txt in new_text_list:
+        upttxt.append('<span style="color:red">{}</span>'.format(txt))
+    return text_list[:start] + upttxt + text_list[end:]
+
+
 def main():
 
     st.subheader("Chinese Spelling Correction")
@@ -66,15 +75,25 @@ def main():
 
             # list of search list and result list
             for search_word, result in zip(search_list, result_list):
-                
+
                 corrected_text, details = result
                 # if details is not empty, show details
                 if details:
-                    st.write('Input text:' + search_word)
-                    st.write('Corrected text:' + corrected_text)
-                    st.write('Details:')
-                    for detail in details:                  
-                        st.write(detail)                   
+                    txt_hl = list(search_word)
+                    corrected_hl = list(corrected_text)
+                    for detail in details:
+                        # highlight word in text
+                        txt_hl = highlight_word(txt_hl, detail[2], detail[3])
+                        corrected_hl = highlight_word(corrected_hl, detail[2],
+                                                      detail[3])
+
+                    txt_hlstr = ''.join(txt_hl)
+                    corrected_hlstr = ''.join(corrected_hl)
+                    st.markdown('Input text: ' + txt_hlstr,
+                                unsafe_allow_html=True)
+                    st.markdown('Corrected text: ' + corrected_hlstr,
+                                unsafe_allow_html=True)
+
 
 if __name__ == '__main__':
     main()
