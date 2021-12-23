@@ -66,13 +66,15 @@ def main():
 
             # list of search list and result list
             for search_word, result in zip(search_list, result_list):
-                st.write('Input text:' + search_word)
+                
                 corrected_text, details = result
-                st.write('Corrected text:' + corrected_text)
-                st.write('Details:')
-                for detail in details:
-                    st.write(detail)
-
+                # if details is not empty, show details
+                if details:
+                    st.write('Input text:' + search_word)
+                    st.write('Corrected text:' + corrected_text)
+                    st.write('Details:')
+                    for detail in details:                  
+                        st.write(detail)                   
 
 if __name__ == '__main__':
     main()
