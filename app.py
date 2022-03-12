@@ -2,6 +2,7 @@ import streamlit as st
 import operator
 import torch
 from transformers import BertTokenizer, BertForMaskedLM
+import streamlit_authenticator as stauth
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -99,4 +100,17 @@ def main():
                         st.markdown('NO ERRORS FOUND')
 
 if __name__ == '__main__':
-    main()
+    names = ['John Smith','Rebecca Briggs']
+    usernames = ['jsmith','rbriggs']
+    passwords = ['123','456']
+    hashed_passwords = stauth.hasher(passwords).generate()
+    authenticator = stauth.authenticate(names,usernames,hashed_passwords,
+    'some_cookie_name','some_signature_key',cookie_expiry_days=3)
+
+    name, authentication_status = authenticator.login('Login1','sidebar')
+    if authentication_status:
+        main()
+    elif authentication_status == False:
+        st.error('Username/password is incorrect')
+    elif authentication_status == None:
+        st.warning('Please enter your username and password')
