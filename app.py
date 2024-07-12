@@ -107,7 +107,7 @@ if __name__ == '__main__':
     authenticator = stauth.authenticate(names,usernames,hashed_passwords,
     'some_cookie_name','some_signature_key',cookie_expiry_days=3)
 
-    name, authentication_status = authenticator.login('Login1','sidebar')
+    name, authentication_status = authenticator.login('Login','sidebar')
     if authentication_status:
         main()
     elif authentication_status == False:
